@@ -34,6 +34,7 @@ import java.net.URLEncoder;
  * @author bstephen
  * @date 10th July 2013
  * @date 29th July 2013
+ * @date 14th April 2015
  */
 public class ITLClient {
 
@@ -233,11 +234,21 @@ public class ITLClient {
     public List<Measurement> getMeasurementsForSensor(Sensor s, String start, String finish) throws ApiException {
         return this.getMeasurementsForSensor(s.getSensorId(), start, finish);
     }
-
+    
+    /**
+     * Returns a series of measurements between two given dates from a given sensor.
+     * 
+     * @param s the Sensor id to return measurements for 
+     * @param start the date of the first Measurement
+     * @param finish the date of the last Measurement
+     * @return A list of Measurement instances between the given dates.
+     * @throws ApiException
+     */
+    
     public List<Measurement> getMeasurementsForSensor(int s, String start, String finish) throws ApiException {
         try {
-            start = URLEncoder.encode(start, "UTF-8");
-            finish = URLEncoder.encode(finish, "UTF-8");
+            start = URLEncoder.encode(start, "UTF-8").replace("+","%20"); 
+            finish = URLEncoder.encode(finish, "UTF-8").replace("+","%20");
         }
         catch (UnsupportedEncodingException ex) {
             throw new ApiException(ex);
@@ -272,8 +283,8 @@ public class ITLClient {
 
     public List<Actuations> getActuationsForSensor(int s, String start, String finish) throws ApiException {
         try {
-            start = URLEncoder.encode(start, "UTF-8");
-            finish = URLEncoder.encode(finish, "UTF-8");
+            start = URLEncoder.encode(start, "UTF-8").replace("+","%20");
+            finish = URLEncoder.encode(finish, "UTF-8").replace("+","%20");
         }
         catch (UnsupportedEncodingException ex) {
             throw new ApiException(ex);
