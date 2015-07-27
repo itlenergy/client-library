@@ -231,6 +231,13 @@ public class ITLClient {
         return addObject(s, null, "/sensors");
     }
 
+    public void updateSensor(Sensor sensor) throws ApiException {
+    ApiResponse response = getClient("/sensors").put(sensor);
+    
+    if (!response.success())
+        throw new ApiException("Could not update sensor.");
+    }
+    
     public List<Measurement> getMeasurementsForSensor(Sensor s, String start, String finish) throws ApiException {
         return this.getMeasurementsForSensor(s.getSensorId(), start, finish);
     }
